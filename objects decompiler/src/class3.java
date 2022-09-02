@@ -11,12 +11,13 @@ import java.util.Scanner;
 public class class3 {
 
 	public static void main(String[] args) throws IOException {
+		new File("output\\objects").mkdirs();
 		String hex = "0";
 		Scanner sc = new Scanner(System.in);
-		System.out.println("type 18 for 1.18!");
-		byte ver= sc.nextByte();
+		System.out.println("type 1.18 for 1.18!");
+		String ver= sc.nextLine();
 		FileInputStream lec = null;
-		lec = new FileInputStream("output\\indexes\\1."+ver+".json");
+		lec = new FileInputStream("output\\indexes\\"+ver+".json");
 		char c1=0,c2=0,c3=0,c4=0,c5=0,c6=0,c7=0,c8=0,c9=0,c10=0,c11=0,c12=0,c13=0,c14=0,c15=0,c16=0;
 		char c17=0,c18=0,c19=0,c20=0,c21=0,c22=0,c23=0,c24=0,c25=0,c26=0,c27=0,c28=0,c29=0,c30=0,c31=0,c32=0;
 		char c33=0,c34=0,c35=0,c36=0,c37=0,c38=0,c39=0,c40=0,c41=0,c42=0,c43=0,c44=0,c45=0,c46=0,c47=0,c48=0;
@@ -25,6 +26,9 @@ public class class3 {
 		String cc=" ";
 		String cc2 = " ";
 		byte get = -2;
+		if (ver.equals("pre-1.6")) {
+			get = -4;
+		}
 		byte getadd = -1;
 		byte h = 0;
 		for (int r = 0; r!=-1;) {
@@ -283,35 +287,23 @@ public class class3 {
 							c33,c34,c35,c36,c37,c38,c39,c40,c41,c42,c43,c44,c45,c46,c47,c48,c49,c50,c51,c52,c53,c54,c55,c56,c57,c58,c59,c60,c61,c62,c63,c64,
 							c65,c66,c67,c68,c69,c70,c71,c72,c73,c74,c75,c76,c77,c78,c79,c80});
 				}
-								
-				
+					
 				System.out.println(cc);
 				if (h==1) {
 					cc2 = cc.trim();
-					
-			
-					File nf = new File("output\\objects\\1."+ver+"\\"+cc2);
-			
-					nf.mkdirs();
-					
+					File nf = new File("output\\objects\\"+ver+"\\"+cc2);		
+					nf.mkdirs();		
 				}
 				if (h==2) {
-					h = 0;
-					
-					
+					h = 0;									
 					File floc = new File("assets files location.txt");
 					BufferedReader br = new BufferedReader(new FileReader(floc));
 					String ass = br.readLine();
-					br.close();
-					
-					hex = cc.substring(0,2);
-					
-					
+					br.close();					
+					hex = cc.substring(0,2);										
 					Path source = Paths.get(ass+"\\objects\\"+hex+"\\"+cc);
-					Path dest = Paths.get("output\\objects\\1."+ver+"\\"+cc2+"\\"+cc);
-
+					Path dest = Paths.get("output\\objects\\"+ver+"\\"+cc2+"\\"+cc);
 				    Files.copy(source, dest);				    				    
-					
 				}		
 				c1=32;c2=32;c3=32;c4=32;c5=32;c6=32;c7=32;c8=32;c9=32;c10=32;c11=32;c12=32;c13=32;c14=32;c15=32;c16=32;
 				c17=32;c18=32;c19=32;c20=32;c21=32;c22=32;c23=32;c24=32;c25=32;c26=32;c27=32;c28=32;c29=32;c30=32;c31=32;c32=32;
@@ -324,10 +316,7 @@ public class class3 {
 				getadd = -1;
 			}		
 			if (get==1) {
-				getadd++;
-							
-
-				
+				getadd++;		
 				c1 = ccc(getadd, c, c1, 1);
 				c2 = ccc(getadd, c, c2, 2);
 				c3 = ccc(getadd, c, c3, 3);
@@ -407,8 +396,7 @@ public class class3 {
 				c77 = ccc(getadd, c, c77, 77);
 				c78 = ccc(getadd, c, c78, 78);
 				c79 = ccc(getadd, c, c79, 79);
-				c80 = ccc(getadd, c, c80, 80);
-				
+				c80 = ccc(getadd, c, c80, 80);				
 			}	
 		}
 		lec.close();
