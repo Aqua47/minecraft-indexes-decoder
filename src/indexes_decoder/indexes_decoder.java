@@ -16,11 +16,12 @@ public class indexes_decoder {
 
 	public static void main(String[] args) throws IOException {
 		//file location
+		int p1=0,p2=0,p3=0,p4=0;
 		new File("output\\indexes").mkdirs();
 		File floc = new File("assets files location.txt");
 		BufferedReader br = new BufferedReader(new FileReader(floc));
 		String ass = br.readLine();
-		br.close();	
+		br.close();
 		String file = "";
 		//files available
 		System.out.println();
@@ -31,7 +32,8 @@ public class indexes_decoder {
 	    pathnames = fav.list();
 	    for (String pathname : pathnames) {
 	    	System.out.println(pathname);
-	    }		
+	    }	
+	    double allTime = 0;
 		//version of the indexes
 		Scanner sc = new Scanner(System.in);
 		System.out.println();
@@ -39,7 +41,6 @@ public class indexes_decoder {
 		System.out.println("or  all  to decode all available indexes");
 		System.out.println();
 		String ver = sc.nextLine();
-		sc.close();
 		//indexes decoder
 		int a = -1;
 		int p = pathnames.length;	
@@ -55,6 +56,11 @@ public class indexes_decoder {
 		}	
 		String vermem = ver.substring(0, ver.length() - 5);
 		while(p != a) {
+			long startTime = System.nanoTime();
+			p1=0;
+			p2=0;
+			p3=0;
+			p4=0;
 			if (a != -1) {
 				ver = (pathnames[a]);
 			}
@@ -74,24 +80,22 @@ public class indexes_decoder {
 			int line = 1;		
 			//indexes decoder loop
 			int ci;
-			System.out.print("Line:"+line);
 			for (ci = fin.read(); ci!=-1; ci = fin.read()) {
 				cd = (char)ci;
 				pw.print(cd);
-				System.out.print(cd);
 				if (cd==',') {
 					vir++;
 					if (vir==2) {
 						vir = 0;
 						line++;
 						pw.println();
-						System.out.println();
-						System.out.print("Line:"+line);
 					}
 				}
-			}	
+			}
+			int line2 = line;
+			System.out.println("indexes "+ver+" created");
 			fin.close();
-			pw.close();	
+			pw.close();
 			
 			// part 2	
 			
@@ -115,7 +119,7 @@ public class indexes_decoder {
 			byte h = 0;
 			for (int r = 0; r!=-1;) {
 				r = lec.read();
-				char c = (char)r;			
+				char c = (char)r;
 				if (get==2) {
 					get = -2;
 					h++;
@@ -368,17 +372,14 @@ public class indexes_decoder {
 						cc = new String(new char[] {c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15,c16,c17,c18,c19,c20,c21,c22,c23,c24,c25,c26,c27,c28,c29,c30,c31,c32,
 								c33,c34,c35,c36,c37,c38,c39,c40,c41,c42,c43,c44,c45,c46,c47,c48,c49,c50,c51,c52,c53,c54,c55,c56,c57,c58,c59,c60,c61,c62,c63,c64,
 								c65,c66,c67,c68,c69,c70,c71,c72,c73,c74,c75,c76,c77,c78,c79,c80});
-					}					
+					}				
 
 					if (h==1) {
 						cc2 = cc.trim();
 						File nfp = new File("output\\objects\\"+vermem+"\\"+cc2);
 						file = "output\\objects\\"+vermem+"\\"+cc2.substring(0, cc2.length() - nfp.getName().length())+nfp.getName();
-						File nf = new File("output\\objects\\"+vermem+"\\"+cc2.substring(0, cc2.length() - nfp.getName().length())+nfp.getName());
-						nf.mkdirs();
-						System.out.print("Line:"+line+" ");
-						line++;
-						System.out.println("output\\objects\\"+vermem+"\\"+cc2.substring(0, cc2.length() - nfp.getName().length())+nfp.getName());				
+						File nf = new File(file);
+						nf.mkdirs();			
 					}
 					if (h==2) {
 						h = 0;									
@@ -386,10 +387,25 @@ public class indexes_decoder {
 						hex = cc.substring(0,2);										
 						Path source = Paths.get(ass+"\\objects\\"+hex+"\\"+cc);
 						Path dest = Paths.get(file);
-						
-							Files.deleteIfExists(dest);
-						
+						Files.deleteIfExists(dest);
 						Files.copy(source, dest);
+						line++;
+						if (p100(line, line2) >= 0.25 && p1 == 0) {
+							System.out.print("25%   ");
+							p1++;
+						}
+						if (p100(line, line2) >= 0.5 && p2 == 0) {
+							System.out.print("50%   ");
+							p2++;
+						}
+						if (p100(line, line2) >= 0.75 && p3 == 0) {
+							System.out.print("75%   ");
+							p3++;
+						}
+						if (p100(line, line2) >= 1 && p4 == 0) {
+							System.out.println("100%");
+							p4++;
+						}
 					}
 					c1=32;c2=32;c3=32;c4=32;c5=32;c6=32;c7=32;c8=32;c9=32;c10=32;c11=32;c12=32;c13=32;c14=32;c15=32;c16=32;
 					c17=32;c18=32;c19=32;c20=32;c21=32;c22=32;c23=32;c24=32;c25=32;c26=32;c27=32;c28=32;c29=32;c30=32;c31=32;c32=32;
@@ -482,12 +498,19 @@ public class indexes_decoder {
 					c77 = ccc(getadd, c, c77, 77);
 					c78 = ccc(getadd, c, c78, 78);
 					c79 = ccc(getadd, c, c79, 79);
-					c80 = ccc(getadd, c, c80, 80);				
+					c80 = ccc(getadd, c, c80, 80);	
 				}	
-			}
+			}	
 			lec.close();
-			sc.close();		
-		}		
+			double elapsedTime = ((System.nanoTime() - startTime)/10000000);
+			allTime = allTime + elapsedTime;
+			System.out.println(elapsedTime/100+" second");
+			System.out.println();
+		}
+		System.out.println(allTime/100+" second");		
+		System.out.println("press enter to continue");
+		String close = sc.nextLine();
+		sc.close();	
 	}
 	
 	static char ccc (byte getadd, char c, char ct, int cx) {
@@ -501,4 +524,10 @@ public class indexes_decoder {
 		}
 		return ct;		
 	}
+	
+	static double p100 (double line, double line2) {
+		double out = line/line2;
+		return out;
+	}
+		
 }
