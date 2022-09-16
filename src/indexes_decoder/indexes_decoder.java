@@ -32,7 +32,7 @@ public class indexes_decoder {
 	    pathnames = fav.list();
 	    for (String pathname : pathnames) {
 	    	System.out.println(pathname);
-	    }	
+	    }
 	    double allTime = 0;
 		//version of the indexes
 		Scanner sc = new Scanner(System.in);
@@ -54,7 +54,7 @@ public class indexes_decoder {
 		if (a != -1) {
 			ver = (pathnames[a]);		
 		}	
-		String vermem = ver.substring(0, ver.length() - 5);
+		String vermem = ver.substring(0, ver.length() - 5);	
 		while(p != a) {
 			long startTime = System.nanoTime();
 			p1=0;
@@ -77,7 +77,7 @@ public class indexes_decoder {
 			if (ver.equals("pre-1.6.json")) {
 				vir = -1;
 			}
-			int line = 1;		
+			double line = 1;		
 			//indexes decoder loop
 			int ci;
 			for (ci = fin.read(); ci!=-1; ci = fin.read()) {
@@ -92,7 +92,7 @@ public class indexes_decoder {
 					}
 				}
 			}
-			int line2 = line;
+			double line2 = line;
 			System.out.println("indexes "+ver+" created");
 			fin.close();
 			pw.close();
@@ -372,14 +372,13 @@ public class indexes_decoder {
 						cc = new String(new char[] {c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15,c16,c17,c18,c19,c20,c21,c22,c23,c24,c25,c26,c27,c28,c29,c30,c31,c32,
 								c33,c34,c35,c36,c37,c38,c39,c40,c41,c42,c43,c44,c45,c46,c47,c48,c49,c50,c51,c52,c53,c54,c55,c56,c57,c58,c59,c60,c61,c62,c63,c64,
 								c65,c66,c67,c68,c69,c70,c71,c72,c73,c74,c75,c76,c77,c78,c79,c80});
-					}				
-
+					}
 					if (h==1) {
 						cc2 = cc.trim();
 						File nfp = new File("output\\objects\\"+vermem+"\\"+cc2);
 						file = "output\\objects\\"+vermem+"\\"+cc2.substring(0, cc2.length() - nfp.getName().length())+nfp.getName();
 						File nf = new File(file);
-						nf.mkdirs();			
+						nf.mkdirs();
 					}
 					if (h==2) {
 						h = 0;									
@@ -390,19 +389,19 @@ public class indexes_decoder {
 						Files.deleteIfExists(dest);
 						Files.copy(source, dest);
 						line++;
-						if (p100(line, line2) >= 0.25 && p1 == 0) {
+						if (line/line2 >= 0.25 && p1 == 0) {
 							System.out.print("25%   ");
 							p1++;
 						}
-						if (p100(line, line2) >= 0.5 && p2 == 0) {
+						if (line/line2 >= 0.5 && p2 == 0) {
 							System.out.print("50%   ");
 							p2++;
 						}
-						if (p100(line, line2) >= 0.75 && p3 == 0) {
+						if (line/line2 >= 0.75 && p3 == 0) {
 							System.out.print("75%   ");
 							p3++;
 						}
-						if (p100(line, line2) >= 1 && p4 == 0) {
+						if (line/line2 >= 1 && p4 == 0) {
 							System.out.println("100%");
 							p4++;
 						}
@@ -507,12 +506,9 @@ public class indexes_decoder {
 			System.out.println(elapsedTime/100+" second");
 			System.out.println();
 		}
-		System.out.println(allTime/100+" second");		
-		System.out.println("press enter to continue");
-		String close = sc.nextLine();
-		sc.close();	
+		System.out.println(allTime/100+" second");
 	}
-	
+
 	static char ccc (byte getadd, char c, char ct, int cx) {
 		if (getadd==cx) {
 			if (c=='/') {
@@ -523,11 +519,6 @@ public class indexes_decoder {
 			}
 		}
 		return ct;		
-	}
-	
-	static double p100 (double line, double line2) {
-		double out = line/line2;
-		return out;
 	}
 		
 }
